@@ -1,0 +1,6 @@
+[flake8]
+# E501: line length
+# E302: blank lines
+# E127: continuation indent
+ignore = E501,E302,E127
+exclude = .git,venv
