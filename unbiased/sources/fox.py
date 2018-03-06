@@ -20,7 +20,6 @@ class Fox(NewsSource):
         """
         soup = cls._fetch_content(cls.url)
 
-
         primary = soup.find('div', class_='main-primary')\
                 .find('div', class_='collection-spotlight')\
                 .find_all('article', class_='article')

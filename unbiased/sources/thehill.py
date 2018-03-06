@@ -36,4 +36,3 @@ class TheHill(NewsSource):
             # fall back on grabbing text from the article
             desc = soup.find('div', class_='field-items')
             return desc.text[:200].rsplit(' ', 1)[0]
-

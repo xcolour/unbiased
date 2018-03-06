@@ -47,7 +47,7 @@ class TheGuardian(NewsSource):
 
         # if that ugly, brittle shit fails, fall back on the low-res image
         if soup.find('img', class_='maxed'):
-            img =  soup.find('img', class_='maxed')['src']
+            img = soup.find('img', class_='maxed')['src']
         if soup.find('meta', itemprop='image'):
             img = soup.find('meta', itemprop='image')['content']
         if soup.find('img', class_='immersive-main-media__media'):
