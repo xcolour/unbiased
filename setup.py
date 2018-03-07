@@ -1,8 +1,18 @@
+import os
 from setuptools import setup
+
+buildnum = os.environ.get('TRAVIS_BUILD_NUMBER')
+if buildnum is None:
+    version = '0.dev0'
+else:
+    version = buildnum
+gitrev = os.environ.get('TRAVIS_COMMIT')
+if gitrev is not None:
+    version = '{}+{}'.format(version, gitrev)
 
 setup(
     name="unbiased",
-    version="5",
+    version=version,
     packages=['unbiased', 'unbiased.sources'],
     package_data={
         'unbiased': [
