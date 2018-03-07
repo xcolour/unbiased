@@ -5,10 +5,10 @@ buildnum = os.environ.get('TRAVIS_BUILD_NUMBER')
 if buildnum is None:
     version = '0.dev0'
 else:
-    version = buildnum
+    version = buildnum[:7]
 gitrev = os.environ.get('TRAVIS_COMMIT')
 if gitrev is not None:
-    version = '{}+{}'.format(version, gitrev)
+    version = '{}-{}'.format(version, gitrev)
 
 setup(
     name="unbiased",

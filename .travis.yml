@@ -18,4 +18,4 @@ deploy:
   file: 'dist/*.whl'
   skip_cleanup: true
   on:
-    repo: xcolour/unbiased
+    tags: true
