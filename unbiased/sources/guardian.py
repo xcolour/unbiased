@@ -18,16 +18,15 @@ class TheGuardian(NewsSource):
     def _fetch_urls(cls):
         soup = cls._fetch_content(cls.url)
 
-        url_groups = []
-        for htag in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
-            hblocks = soup.find('section', id='headlines').find_all(htag)
-            urls = [x.a['href'] for x in hblocks]
-            url_groups.append(urls)
-        url_groups = [x for x in url_groups if len(url_groups) > 0]
-        if len(url_groups) < 3:
-            raise Exception('not enough article groups on Guardian home page!')
+        h = soup.find(id='headlines')\
+            .find_all(class_='fc-item__link')
+        h = [x['href'] for x in h]
 
-        return tuple(url_groups[0]), tuple(url_groups[1]), tuple(url_groups[2])
+        h1s = (h[0],)
+        h2s = tuple(h[1:4])
+        h3s = tuple(h[4:])
+
+        return h1s, h2s, h3s
 
     @classmethod
     def _get_image(cls, soup):
