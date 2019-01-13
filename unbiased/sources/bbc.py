@@ -24,3 +24,7 @@ class BBC(NewsSource):
         h3s = tuple(x.find('a', class_='title-link')['href'] for x in h3s)
 
         return h1s, h2s, h3s
+
+    @classmethod
+    def _get_image(cls, soup):
+        return soup.find('meta', property='og:image')['content'].replace('branded_news', 'cpsprodpb')
