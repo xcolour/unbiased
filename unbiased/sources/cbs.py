@@ -14,24 +14,13 @@ class CBS(NewsSource):
     def _fetch_urls(cls):
         soup = cls._fetch_content(cls.url)
 
-        # get primary headline
-        h1 = soup.find('h1', class_='title')
-        # sometimes they lead with a video
-        # if so, we'll pull the first h2 into the h1 slot later
-        if h1 is not None:
-            h1s = (h1.a['href'],)
+        top = soup.find('section', id='component-latest-news')\
+            .find_all('article')
+        h1s = (top[0].find('a')['href'],)
+        h2s = tuple([x.find('a')['href'] for x in top[1:]])
 
-        # get secondary headlines
-        h2s = soup.find('div', attrs={'data-tb-region': 'Big News Area Side Assets'})\
-                .ul.find_all('li', attrs={'data-tb-region-item': True})
-        h2s = tuple(x.a['href'] for x in h2s)
-        if h1 is None:
-            h1s = (h2s[0],)
-            h2s = tuple(h2s[1:])
-
-        # get tertiary headlines
-        h3s = soup.find('div', attrs={'data-tb-region': 'Hard News'})\
-                .ul.find_all('li', attrs={'data-tb-region-item': True})
-        h3s = tuple(x.a['href'] for x in h3s[:5])
+        more = soup.find('section', id='component-more-top-stories')\
+            .find_all('article')
+        h3s = tuple([x.find('a')['href'] for x in more])
 
         return h1s, h2s, h3s
