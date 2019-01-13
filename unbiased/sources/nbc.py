@@ -1,3 +1,5 @@
+import re
+
 from unbiased.sources.base import NewsSource
 
 class NBC(NewsSource):
@@ -12,21 +14,16 @@ class NBC(NewsSource):
     def _fetch_urls(cls):
         soup = cls._fetch_content(cls.url)
 
-        h1s = soup.find('div', class_='js-top-stories-content')\
-                .find('div', class_='panel_hero')\
-                .a
-        h1s = (h1s['href'],)
+        articles = soup.find_all('article', class_='teaseCard')
+        article_links = [x.find('a', class_=re.compile('pictureLink__.*')) for x in articles]
+        article_links = [x['href'] for x in article_links if x is not None]
 
-        rows = soup.find('div', class_='js-top-stories-content')\
-                .div.find_all('div', class_='row')
-        h2s = []
-        for row in rows:
-            for fragment in row.find_all('div', class_='media-body'):
-                h2s.append(fragment.a['href'])
-        h2s = tuple(h2s)
+        h1s = tuple(article_links[:3])
+        h2s = tuple(article_links[3:])
 
-        links = soup.find('div', class_='js-more-topstories')\
-                .div.find_all('div', class_='story-link')
-        h3s = tuple(x.a['href'] for x in links)
+        pancake_headlines = soup.find('section', class_='pancake')\
+                .find_all('h3')
+
+        h3s = tuple([x.find('a')['href'] for x in pancake_headlines])
 
         return h1s, h2s, h3s
