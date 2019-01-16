@@ -9,7 +9,7 @@ class Fox(NewsSource):
     bad_titles = ['O&#039;Reilly', 'Fox News', 'Brett Baier', 'Tucker']
     bad_descriptions = ['Sean Hannity']
     bad_authors = ['Bill O\'Reilly', 'Sean Hannity', 'Howard Kurtz']
-    bad_imgs = ['http://www.foxnews.com/content/dam/fox-news/logo/og-fn-foxnews.jpg']
+    bad_imgs = ['og-fn-foxnews.jpg', 'og-fox-news.png']
     bad_urls = ['http://www.foxnews.com/opinion', 'videos.foxnews.com']
 
     @classmethod
